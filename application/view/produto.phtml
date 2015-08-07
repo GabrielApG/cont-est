@@ -1,0 +1,82 @@
+<?php 
+
+header("Content-Type: text/html; charset=ISO-8859-1", true);
+
+$acao=(isset($_GET['acao']))?$_GET['acao']:"";
+$id=(isset($_GET['id']))?$_GET['id']:"0";
+
+$quantidade=(isset($_POST['quantidade']))?$_POST['quantidade']:"0";
+$idproduto= (isset($_POST['produto']))?$_POST['produto']:"0";
+
+switch ($acao){
+	
+	
+	case 'formbuscaprodcat':
+	$form=new Form(); //$table
+	$form->FormListaProdCategoria($id);
+	break;
+
+	case 'listapesquisa':
+	$form=new Form(); //$table
+	$form->FormListaPesq($id);
+	break;
+	
+	case 'formpesquisar':
+	$form=new Form(); //$table
+	$form->FormPesq();
+	break;
+	
+	case 'formcadastro':
+	$form=new Form("produto");
+	$form->FormCadastro('','cadastrar','categoria');	
+	break;
+	
+	case 'formcadastrocategoria':
+	$form=new Form("categoria");
+	$form->FormCadastro('','produto','cadastrarcategoria');	
+	break;
+	
+	case 'cadastrar':
+	$produtos=new Produtos("produto");
+	$produtos->Cadastrar();
+	break;
+	
+	
+	case 'cadastrarcategoria':
+	$produtos=new Produtos("categoria");
+	$produtos->Cadastrar();
+	break;
+	
+	case 'listar':
+	$produtos=new Produtos();
+	$produtos->Listar();
+	break;
+	
+	case 'deletar':
+	$produtos=new Produtos();
+	$produtos->Deletar($id);
+	break;
+	
+	case 'formeditar':
+	$form=new Form("produto");
+	$form->FormEditar("editar",$id,"categoria,''");
+	break;
+	
+	case 'editar':
+	$produtos=new Produtos();
+	$produtos->Atualizar($id);
+	break;
+	
+	case 'entrada':
+	$produtos=new Produtos();
+	$produtos->Entrada($idproduto,$quantidade);
+	break;
+		
+	case 'saida':
+	$produtos=new Produtos('produto',$idproduto);
+	$produtos->Saida($idproduto,$quantidade);
+	break;
+}
+
+
+?>

@@ -1,0 +1,41 @@
+<?php 
+
+header("Content-Type: text/html; charset=ISO-8859-1", true);
+
+$acao=$_GET['acao'];
+//$id=$_GET['id'];
+$id=(isset($_GET['id']))?$_GET['id']:"0";
+switch ($acao){
+	case 'formcadastro':
+	$form=new Form("retirante");
+	$form->FormCadastroRetirante('','cadastrar');	
+	break;
+	
+	case 'cadastrar':
+	$retirantes=new retirantes("");
+	$retirantes->Cadastrar();
+	break;
+	
+	case 'listar':
+	$retirantes=new retirantes();
+	$retirantes->Listar();
+	break;
+	
+	case 'deletar':
+	$retirantes=new retirantes();
+	$retirantes->Deletar($id);
+	break;
+	
+	case 'formeditar':
+	$form=new Form("retirante");
+	$form->FormEditar("editar",$id);
+	break;
+	
+	case 'editar':
+	$retirantes=new retirantes();
+	$retirantes->Atualizar($id);
+	
+}
+
+
+?>
